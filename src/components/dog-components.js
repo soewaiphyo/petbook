@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
+import { CardActions, CardContent, Container } from "@material-ui/core";
 
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -9,34 +8,21 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import IconButton from "@material-ui/core/IconButton";
 
 const DogContainer = (props) => {
-  const { isFav, onChangeFav } = props; //Destructring
-  const dog = props.dog;
+  const { dog, index } = props;
 
   return (
-    <Card
-      style={{
-        marginBottom: "25px",
-        backgroundColor: "#FFEDF9",
-        textAlign: "left",
-      }}
-    >
-      <CardContent>
-        <img src={dog.imageUrl} style={{ maxWidth: "100%" }} />
-
-        <Typography variant="h5" component="h2">
-          My Name is <b style={{ color: "red" }}>{dog.name}</b>
-        </Typography>
-        <Typography color="textSecondary">Breed: {dog.type}</Typography>
-        <Typography variant="body2" component="p">
-          <b>Intro about me : </b>
-          {dog.intro}
-        </Typography>
+    <Card variant="outlined">
+      <CardContent style={{ paddingBottom: 0, marginBottom: 0 }}>
+        <img src={dog} style={{ height: 300 }}></img>
       </CardContent>
       <CardActions>
-        <IconButton aria-label="fav" onClick={onChangeFav}>
-          {isFav && <FavoriteIcon style={{ color: "red" }} />}
-          {!isFav && <FavoriteBorderIcon />}
-        </IconButton>
+        <Container
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        ></Container>
       </CardActions>
     </Card>
   );

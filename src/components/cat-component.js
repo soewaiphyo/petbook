@@ -1,26 +1,22 @@
 import React from "react";
-import Card from "@material-ui/core/Card";
+import { Card, CardActions, Container } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 
 const CatContainer = ({ cat }) => {
   return (
-    <Card style={{ marginBottom: 20 }}>
-      <CardContent>
-        <div>
-          <div>
-            <img
-              alt={cat.name}
-              src={cat.profileUrl}
-              style={{ maxWidth: "100%" }}
-            ></img>
-            <div style={{ textAlign: "left" }}>
-              <div> Name: {cat.name}</div>
-              <div> Age: {cat.age}</div>
-              <div> Eye Color: {cat.eyeColor}</div>
-            </div>
-          </div>
-        </div>
+    <Card key={cat.id} variant="outlined">
+      <CardContent style={{ paddingBottom: 0, marginBottom: 0 }}>
+        <img src={cat.url} style={{ height: 300 }}></img>
       </CardContent>
+      <CardActions>
+        <Container
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        ></Container>
+      </CardActions>
     </Card>
   );
 };

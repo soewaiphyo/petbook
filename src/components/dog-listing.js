@@ -1,83 +1,30 @@
 import React, { useState, useEffect } from "react";
+import { Grid } from "@material-ui/core";
 import DogContainer from "./dog-components";
 
-class Dog {
-  constructor(name, type, age, imageUrl, intro) {
-    this.name = name;
-    this.type = type;
-    this.age = age;
-    this.imageUrl = imageUrl;
-    this.intro = intro;
-  }
-}
-const dogOne = new Dog(
-  "Casifier",
-  "Pull Dog",
-  "6 months",
-  "http://cdn.akc.org/content/article-body-image/pugsmalldogs.jpg",
-  "Super active type. Love chicken wings and carrots."
-);
-
-const dogTwo = new Dog(
-  "Howl",
-  "Havanese Dog",
-  "2 years",
-  "http://cdn.akc.org/content/article-body-image/havanesesmalldogs.jpg",
-  "love to play in sunlight. scare of height."
-);
-const dogThree = new Dog(
-  "Sophie",
-  "Papillon",
-  "4 months",
-  "http://cdn.akc.org/content/article-body-image/papillonsmalldogs.jpg",
-  "Love beach and swimming pool. love brocoli and banana."
-);
-const dogFour = new Dog(
-  "Snowy",
-  "Cavking Charless",
-  "9 months",
-  "http://cdn.akc.org/content/article-body-image/cavkingcharlessmalldogs.jpg",
-  "Love Steak and bacon. love to play with buddies"
-);
-const dogFive = new Dog(
-  "Jackie",
-  "Bostonterrier",
-  "11 months",
-  "http://cdn.akc.org/content/article-body-image/bostonterriersmalldogs.jpg",
-  "Love Steak and bacon. love to play with buddies"
-);
-const dogs = [dogOne, dogTwo, dogThree, dogFour, dogFive];
-const FAVOURITE_DOGS = "favourite-dogs";
-
 function DogListing() {
-  const [favItems, setFavItems] = useState([]);
+  const [dogs, setDogs] = useState([]);
 
-  useEffect((props) => {
-    // first time running
-    const favouriteItems = JSON.parse(localStorage.getItem(FAVOURITE_DOGS));
-    if (favouriteItems) setFavItems(favouriteItems);
+  useEffect(() => {
+    fetch("https://dog.ceo/api/breeds/image/random/15")
+      .then((response) => response.json())
+      .then((data) => setDogs(data.message))
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }, []);
 
   return (
-    <div className="App">
-      <div className="container-center">
-        <h1>Cute Dogs are here!</h1>
+    <div>
+      <h1>Dog Listing</h1>
+
+      <Grid container spacing={1}>
         {dogs.map((dog, i) => (
-          <DogContainer
-            dog={dog}
-            key={i}
-            isFav={favItems.findIndex((item) => item === dog.name) >= 0} //default false
-            onChangeFav={() => {
-              const newFavItems =
-                favItems.findIndex((item) => item === dog.name) >= 0
-                  ? favItems.filter((item) => item !== dog.name)
-                  : [...favItems, dog.name];
-              localStorage.setItem(FAVOURITE_DOGS, JSON.stringify(newFavItems));
-              setFavItems(newFavItems);
-            }}
-          />
+          <Grid key={i} item xs={12} md={4}>
+            <DogContainer dog={dog} />
+          </Grid>
         ))}
-      </div>
+      </Grid>
     </div>
   );
 }
